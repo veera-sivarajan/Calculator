@@ -23,7 +23,7 @@ public class Stack<T> {
       top = ele;
     }
     size += 1;
-    System.out.println(num + " added");
+    //System.out.println(num + " added");
   }
 
   public T pop() throws Exception {

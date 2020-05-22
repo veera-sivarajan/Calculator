@@ -20,30 +20,42 @@ public class Evaluate {
       case '/':
         result = 2;
         break;
+      case '^':
+        result = 3;
     }
     return result;
   }
 
   public String convert(String input) throws Exception{ 
     for(int i = 0; i < input.length(); ++i) {
+      int flag = 0;
       char ch = input.charAt(i);
       if(Character.isDigit(ch)) {
+        flag += 1;
         output += ch;
       }
 
-      else if(Character.compare(ch, '(') == 0) {
+      if(Character.compare(ch, '(') == 0) {
+        //System.out.println("Pushing: " + ch);
         operator.push(ch);
+        flag += 1;
       }
-      else if(Character.compare(ch, ')') == 0) {
+
+      if(Character.compare(ch, ')') == 0) {
         while(operator.getSize() > 0 && Character.compare(operator.peek(), '(') != 0) {
           output += operator.pop();
+          //System.out.println("Output: " + output);
         }
-        operator.pop(); //popping '('
+        //System.out.println("Popping: " + operator.pop()); //popping '('
+        flag += 1;
       }
-      else {
-        while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek())) {
+
+      if(flag == 0) {
+        while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek()) && (Character.compare(ch, operator.peek()) != 0)) {
           output += operator.pop();
         }
+        //System.out.println("Output: " + output);
+        //System.out.println("Pushing: " + ch);
         operator.push(ch);
       }
     }
@@ -55,6 +67,7 @@ public class Evaluate {
 
   public static void main(String[] args) throws Exception {
     Evaluate eval = new Evaluate();
+    System.out.println("Input: " + args[0]);
     System.out.println("Output: " + eval.convert(args[0]));
   }
 }
