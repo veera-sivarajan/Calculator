@@ -15,4 +15,8 @@ public class ASTNode<T> {
     this.left = left;
     this.right = right;
   }
+  
+  public T getData() {
+    return data;
+  }
 }

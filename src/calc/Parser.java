@@ -13,7 +13,24 @@ public class Parser {
     return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
   }
 
-  public ASTNode<Character> eval(String input) {
+  private int precedence(char ch) {
+    int result = 0;
+    switch(ch) {
+      case '+':
+      case '-':
+        result = 1;
+        break;
+      case '*':
+      case '/':
+        result = 2;
+        break;
+      case '^':
+        result = 3;
+    }
+    return result;
+  }
+
+  public ASTNode<Character> eval(String input) throws Exception {
     for(int i = 0; i < input.length(); ++i) {
       char ch = input.charAt(i);
       if(ch == '(') {
@@ -42,5 +59,11 @@ public class Parser {
       }
     }
     return operands.pop();
+  }
+
+  public static void main(String[] args) throws Exception {
+    Parser parse = new Parser();
+    ASTNode<Character> root = parse.eval("1+2+3");
+    System.out.println("Root data: " + root.getData());
   }
 }
