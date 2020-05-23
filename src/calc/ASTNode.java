@@ -31,4 +31,12 @@ public class ASTNode<T> {
   public ASTNode<T> getLeft() {
     return left;
   }
+
+  public void setLeft(ASTNode<T> left) {
+    this.left = left;
+  }
+
+  public void setRight(ASTNode<T> right) {
+    this.right = right;
+  }
 }

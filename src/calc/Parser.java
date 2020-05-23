@@ -20,11 +20,12 @@ public class Parser {
       char token = input.charAt(i);
       if(token == '(') {
         parentStack.push(currNode);
+        currNode.setLeft(new ASTNode<Character>(' '));
         currNode = currNode.getLeft();
         continue;
       }
 
-      if(Character.isDigit(token)) {
+      if(Character.isDigit(token)) { //throws stack underflow when no paranthesis
         currNode.setData(token);
         currNode = parentStack.pop();
         continue;
@@ -33,6 +34,7 @@ public class Parser {
       if(isOperator(token)) {
         currNode.setData(token);
         parentStack.push(currNode);
+        currNode.setRight(new ASTNode<Character>(' '));
         currNode = currNode.getRight();
         continue;
       }
