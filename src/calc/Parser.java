@@ -1,69 +1,58 @@
 package calc;
 
 public class Parser {
-  private Stack<Character> operators;
-  private Stack<ASTNode<Character>> operands;
+  private ASTNode<Character> root;
+  private Stack<ASTNode<Character>> parentStack;
+  private ASTNode<Character> currNode;
 
   public Parser() {
-    operators = new Stack<Character>();
-    operands = new Stack<ASTNode<Character>>();
+    root = new ASTNode<Character>(' ');
+    parentStack = new Stack<ASTNode<Character>>();
+    currNode = root;
+  }
+
+  public boolean isOperator(char ch) {
+    return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+  }
+
+  public void read(String input) throws Exception {
+    for(int i = 0; i < input.length(); ++i) {
+      char token = input.charAt(i);
+      if(token == '(') {
+        parentStack.push(currNode);
+        currNode = currNode.getLeft();
+        continue;
+      }
+
+      if(Character.isDigit(token)) {
+        currNode.setData(token);
+        currNode = parentStack.pop();
+        continue;
+      }
+
+      if(isOperator(token)) {
+        currNode.setData(token);
+        parentStack.push(currNode);
+        currNode = currNode.getRight();
+        continue;
+      }
+
+      if(token == ')') {
+        currNode = parentStack.pop();
+        continue;
+      }
+    }
+  }
+
+  public ASTNode<Character> getRoot() { 
+    return root;
   }
   
-  private boolean isOperator(char ch) {
-    return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
-  }
-
-  private int precedence(char ch) {
-    int result = 0;
-    switch(ch) {
-      case '+':
-      case '-':
-        result = 1;
-        break;
-      case '*':
-      case '/':
-        result = 2;
-        break;
-      case '^':
-        result = 3;
-    }
-    return result;
-  }
-
-  public ASTNode<Character> eval(String input) throws Exception {
-    for(int i = 0; i < input.length(); ++i) {
-      char ch = input.charAt(i);
-      if(ch == '(') {
-        operators.push(ch);
-      }
-      else if(Character.isDigit(ch)) {
-        operands.push(new ASTNode<Character>(ch));
-      }
-      else if(isOperator(ch)) {
-        while(precedence(operators.peek()) >= precedence(ch)) {
-          char symbol = operators.pop();
-          ASTNode<Character> op1 = operands.pop();
-          ASTNode<Character> op2 = operands.pop();
-          operands.push(new ASTNode<Character>(symbol, op1, op2));
-        }
-        operators.push(ch);
-      }
-      else if(ch == ')') {
-        while(operators.peek() != '(') {
-          char symbol = operators.pop();
-          ASTNode<Character> op1 = operands.pop();
-          ASTNode<Character> op2 = operands.pop();
-          operands.push(new ASTNode<Character>(symbol, op1, op2));
-        }
-        operators.pop();
-      }
-   }
-    return operands.pop();
-  }
-
   public static void main(String[] args) throws Exception {
     Parser parse = new Parser();
-    ASTNode<Character> root = parse.eval("1+2+3");
-    System.out.println("Root data: " + root.getData());
+    parse.read(args[0]);
+    System.out.println("Root data: " + parse.getRoot().getData());
   }
+
+
 }

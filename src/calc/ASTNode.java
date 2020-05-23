@@ -16,7 +16,19 @@ public class ASTNode<T> {
     this.right = right;
   }
   
+  public void setData(T data) {
+    this.data = data;
+  }
+
   public T getData() {
     return data;
+  }
+
+  public ASTNode<T> getRight() {
+    return right;
+  }
+
+  public ASTNode<T> getLeft() {
+    return left;
   }
 }
