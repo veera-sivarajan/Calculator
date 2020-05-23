@@ -1,10 +1,10 @@
 package calc;
 
-public class Evaluate {
+public class InfixToPostfix {
   private Stack<Character> operator;
   private String output;
   
-  public Evaluate() {
+  public InfixToPostfix() {
     operator = new Stack<Character>();
     output = new String("");
   }
@@ -66,7 +66,7 @@ public class Evaluate {
   }
 
   public static void main(String[] args) throws Exception {
-    Evaluate eval = new Evaluate();
+    InfixToPostfix eval = new InfixToPostfix();
     System.out.println("Input: " + args[0]);
     System.out.println("Output: " + eval.convert(args[0]));
   }

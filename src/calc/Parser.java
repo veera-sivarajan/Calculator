@@ -19,8 +19,8 @@ public class Parser {
     for(int i = 0; i < input.length(); ++i) {
       char token = input.charAt(i);
       if(token == '(') {
-        parentStack.push(currNode);
         currNode.setLeft(new ASTNode<Character>(' '));
+        parentStack.push(currNode);
         currNode = currNode.getLeft();
         continue;
       }
@@ -33,17 +33,31 @@ public class Parser {
 
       if(isOperator(token)) {
         currNode.setData(token);
-        parentStack.push(currNode);
         currNode.setRight(new ASTNode<Character>(' '));
+        parentStack.push(currNode);
         currNode = currNode.getRight();
         continue;
       }
 
       if(token == ')') {
-        currNode = parentStack.pop();
+        if(parentStack.getSize() > 0) { 
+          currNode = parentStack.pop();
+        }
         continue;
       }
     }
+  }
+
+  private void inOrderTraversal(ASTNode<Character> node) {
+    if(node != null) {
+      inOrderTraversal(node.getLeft());
+      System.out.print(node.getData());
+      inOrderTraversal(node.getRight());
+    }
+  }
+
+  public void printTree() {
+    inOrderTraversal(root);
   }
 
   public ASTNode<Character> getRoot() { 
@@ -52,8 +66,8 @@ public class Parser {
   
   public static void main(String[] args) throws Exception {
     Parser parse = new Parser();
-    parse.read(args[0]);
-    System.out.println("Root data: " + parse.getRoot().getData());
+    parse.read("(2/4)");
+    parse.printTree();
   }
 
 
