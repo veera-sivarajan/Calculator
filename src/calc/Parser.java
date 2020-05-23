@@ -66,7 +66,7 @@ public class Parser {
   
   public static void main(String[] args) throws Exception {
     Parser parse = new Parser();
-    parse.read("(2/4)");
+    parse.read("(5*3)+(4+2/2*8)");
     parse.printTree();
   }
 
