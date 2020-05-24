@@ -9,6 +9,10 @@ public class InfixToPostfix {
     output = new String("");
   }
 
+  private boolean isOperator(char ch) {
+    return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+  }
+
   private boolean isLeftAssoc(char ch) {
     return ch != '^';
   }
@@ -26,23 +30,21 @@ public class InfixToPostfix {
         break;
       case '^':
         result = 3;
+        break;
     }
     return result;
   }
 
   public String evaluate(String input) throws Exception{ 
     for(int i = 0; i < input.length(); ++i) {
-      int flag = 0;
       char ch = input.charAt(i);
       if(Character.isDigit(ch)) {
-        flag += 1;
         output += ch;
       }
 
       if(Character.compare(ch, '(') == 0) {
         //System.out.println("Pushing: " + ch);
         operator.push(ch);
-        flag += 1;
       }
 
       if(Character.compare(ch, ')') == 0) {
@@ -52,10 +54,9 @@ public class InfixToPostfix {
         }
         //System.out.println("Popping: " + operator.pop()); //popping '('
         operator.pop();
-        flag += 1;
       }
 
-      if(flag == 0) {
+      if(isOperator(ch)) {
         while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek()) && isLeftAssoc(ch)) {
           output += operator.pop();
         }
@@ -69,6 +70,7 @@ public class InfixToPostfix {
     while(operator.getSize() > 0) {
       output += operator.pop();
     }
+    //System.out.println("Output: " + output);
     return output;
   }
 
