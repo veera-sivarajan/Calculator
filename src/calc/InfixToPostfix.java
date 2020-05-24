@@ -43,7 +43,7 @@ public class InfixToPostfix {
 
       if(Character.compare(ch, ')') == 0) {
         while(operator.getSize() > 0 && Character.compare(operator.peek(), '(') != 0) {
-          output += operator.pop();
+            output += operator.pop();
           //System.out.println("Output: " + output);
         }
         //System.out.println("Popping: " + operator.pop()); //popping '('
