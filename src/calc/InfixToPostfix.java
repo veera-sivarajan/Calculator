@@ -30,7 +30,7 @@ public class InfixToPostfix {
     return result;
   }
 
-  public String convert(String input) throws Exception{ 
+  public String evaluate(String input) throws Exception{ 
     for(int i = 0; i < input.length(); ++i) {
       int flag = 0;
       char ch = input.charAt(i);
@@ -63,6 +63,8 @@ public class InfixToPostfix {
         //System.out.println("Pushing: " + ch);
         operator.push(ch);
       }
+      
+      //System.out.println("Conversion: " + output);
     }
     while(operator.getSize() > 0) {
       output += operator.pop();
@@ -70,9 +72,9 @@ public class InfixToPostfix {
     return output;
   }
 
-  public static void main(String[] args) throws Exception {
+  /*public static void main(String[] args) throws Exception {
     InfixToPostfix eval = new InfixToPostfix();
     System.out.println("Input: " + args[0]);
     System.out.println("Output: " + eval.convert(args[0]));
-  }
+  }*/
 }
