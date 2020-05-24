@@ -47,11 +47,12 @@ public class InfixToPostfix {
           //System.out.println("Output: " + output);
         }
         //System.out.println("Popping: " + operator.pop()); //popping '('
+        operator.pop();
         flag += 1;
       }
 
       if(flag == 0) {
-        while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek()) && (Character.compare(ch, operator.peek()) != 0)) {
+        while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek())) {
           output += operator.pop();
         }
         //System.out.println("Output: " + output);
