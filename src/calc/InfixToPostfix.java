@@ -9,6 +9,10 @@ public class InfixToPostfix {
     output = new String("");
   }
 
+  private boolean isLeftAssoc(char ch) {
+    return ch != '^';
+  }
+
   private int precedence(char ch) {
     int result = 0;
     switch(ch) {
@@ -52,7 +56,7 @@ public class InfixToPostfix {
       }
 
       if(flag == 0) {
-        while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek())) {
+        while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek()) && isLeftAssoc(ch)) {
           output += operator.pop();
         }
         //System.out.println("Output: " + output);
