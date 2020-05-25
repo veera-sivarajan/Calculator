@@ -1,5 +1,7 @@
 package calc;
 
+import java.util.*;
+
 public class InfixToPostfix {
   private Stack<Character> operator;
   private String output;
@@ -74,9 +76,17 @@ public class InfixToPostfix {
     return output;
   }
 
-  /*public static void main(String[] args) throws Exception {
+  public void readInput(String input) {
+    Scanner read = new Scanner(input);
+    while(read.hasNext()) {
+      char output;
+      output += read.next();
+      System.out.print(output + " ");
+    }
+  }
+      
+  public static void main(String[] args) throws Exception {
     InfixToPostfix eval = new InfixToPostfix();
-    System.out.println("Input: " + args[0]);
-    System.out.println("Output: " + eval.convert(args[0]));
-  }*/
+    eval.readInput("1 + 10");
+  }
 }
