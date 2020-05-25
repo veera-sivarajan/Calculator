@@ -119,8 +119,8 @@ public class InfixToPostfix {
     return (output);
   }*/
       
-  public static void main(String[] args) throws Exception {
+  /*public static void main(String[] args) throws Exception {
     InfixToPostfix eval = new InfixToPostfix();
     System.out.println("Output: " + eval.evaluate("( 10 + 20 )"));
-  }
+  }*/
 }

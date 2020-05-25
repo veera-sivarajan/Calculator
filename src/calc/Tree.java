@@ -1,31 +1,48 @@
 package calc;
 
+import java.util.*;
+
 public class Tree {
-  ASTNode<Character> root;
-  Stack<ASTNode<Character>> expression;
+  ASTNode<String> root;
+  Stack<ASTNode<String>> expression;
 
   public Tree() {
-     expression = new Stack<ASTNode<Character>>();
+     expression = new Stack<ASTNode<String>>();
+  }
+
+  @SuppressWarnings("unused")
+  private boolean isNumber(String input) {
+    if(input == null) {
+      return false;
+    }
+    try {
+      double d = Double.parseDouble(input);
+    }
+    catch (NumberFormatException e) {
+      return false;
+    }
+    return true;
   }
 
   public void buildTree(String input) throws Exception {
-    for(int i = 0; i < input.length(); ++i) {
-      char ch = input.charAt(i);
-      if(Character.isDigit(ch)) {
-        ASTNode<Character> node = new ASTNode<Character>(ch);
+    Scanner reader = new Scanner(input);
+    while(reader.hasNext()) {
+      String ch = reader.next();
+      if(isNumber(ch)) {
+        ASTNode<String> node = new ASTNode<String>(ch);
         expression.push(node);
       }
       else {
-        ASTNode<Character> node1 = expression.pop();
-        ASTNode<Character> node2 = expression.pop();
-        ASTNode<Character> pushNode = new ASTNode<Character>(ch, node2, node1);
+        ASTNode<String> node1 = expression.pop();
+        ASTNode<String> node2 = expression.pop();
+        ASTNode<String> pushNode = new ASTNode<String>(ch, node2, node1);
         expression.push(pushNode);
       }
     }
     root = expression.pop();
   }
 
-  private void postOrder(ASTNode<Character> node) {
+  private void postOrder(ASTNode<String> node) {
     if(node != null) {
       postOrder(node.getLeft());
       postOrder(node.getRight());
@@ -33,7 +50,7 @@ public class Tree {
     }
   }
 
-  private void inOrder(ASTNode<Character> node) {
+  private void inOrder(ASTNode<String> node) {
     if(node != null) {
       inOrder(node.getLeft());
       System.out.print(node.getData() + " ");
@@ -48,7 +65,9 @@ public class Tree {
   public static void main(String[] args) throws Exception {
     InfixToPostfix convert = new InfixToPostfix();
     Tree make= new Tree();
-    make.buildTree(convert.evaluate("4+2*1+3*(5+1)"));
+    String postFix = convert.evaluate("1 + 2 * 3 - 4");
+    System.out.println("Postfix: " + postFix);
+    make.buildTree(postFix);
     make.printTree();
   }
 }
