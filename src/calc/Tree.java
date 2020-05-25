@@ -62,13 +62,17 @@ public class Tree {
     inOrder(root);
   }
 
-  public static void main(String[] args) throws Exception {
+  public ASTNode<String> getRoot() {
+    return root;
+  }
+
+  /*public static void main(String[] args) throws Exception {
     InfixToPostfix convert = new InfixToPostfix();
     Tree make= new Tree();
     String postFix = convert.evaluate("1 + 2 * 3 - 4");
     System.out.println("Postfix: " + postFix);
     make.buildTree(postFix);
     make.printTree();
-  }
+  }*/
 }
     
