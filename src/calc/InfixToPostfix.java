@@ -12,7 +12,7 @@ public class InfixToPostfix {
   }
 
   private boolean isOperator(String ch) {
-    return ch.equals("+") || ch.equals("-") || ch.equals("*") || ch.equals("/");
+    return ch.equals("+") || ch.equals("-") || ch.equals("*") || ch.equals("/") || ch.equals("^");
   }
 
   private boolean isLeftAssoc(String ch) {
@@ -119,8 +119,8 @@ public class InfixToPostfix {
     return (output);
   }*/
       
-  /*public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
     InfixToPostfix eval = new InfixToPostfix();
-    System.out.println("Output: " + eval.evaluate("( 10 + 20 )"));
-  }*/
+    System.out.println("Output: " + eval.evaluate("2 ^ 3"));
+  }
 }

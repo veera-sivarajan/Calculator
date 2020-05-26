@@ -3,10 +3,12 @@ package calc;
 import java.util.*;
 
 public class Tree {
-  ASTNode<String> root;
-  Stack<ASTNode<String>> expression;
+  private InfixToPostfix convert;
+  private ASTNode<String> root;
+  private Stack<ASTNode<String>> expression;
 
   public Tree() {
+     convert = new InfixToPostfix();
      expression = new Stack<ASTNode<String>>();
   }
 
@@ -24,7 +26,7 @@ public class Tree {
     return true;
   }
 
-  public void buildTree(String input) throws Exception {
+  private void buildTreeHelper(String input) throws Exception {
     Scanner reader = new Scanner(input);
     while(reader.hasNext()) {
       String ch = reader.next();
@@ -40,9 +42,18 @@ public class Tree {
       }
     }
     root = expression.pop();
+    reader.close();
   }
 
-  private void postOrder(ASTNode<String> node) {
+  public void buildTree(String infixInput) throws Exception {
+    buildTreeHelper(convert.evaluate(infixInput));
+  }
+
+  public ASTNode<String> getRoot() {
+    return root;
+  }
+
+  /*private void postOrder(ASTNode<String> node) {
     if(node != null) {
       postOrder(node.getLeft());
       postOrder(node.getRight());
@@ -62,11 +73,7 @@ public class Tree {
     inOrder(root);
   }
 
-  public ASTNode<String> getRoot() {
-    return root;
-  }
-
-  /*public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
     InfixToPostfix convert = new InfixToPostfix();
     Tree make= new Tree();
     String postFix = convert.evaluate("1 + 2 * 3 - 4");

@@ -1,8 +1,13 @@
 package calc;
 
 public class EvaluateTree {
-  
-  private Integer calculate(String operator, Integer leftData, Integer rightData) {
+  private Tree make;
+
+  public EvaluateTree() {
+    make = new Tree();
+  }
+
+  private Double calculate(String operator, Double leftData, Double rightData) {
     switch(operator) {
       case "+":
         return leftData + rightData; 
@@ -12,30 +17,51 @@ public class EvaluateTree {
         return leftData * rightData;
       case "/":
         return leftData / rightData;
+      case "^":
+        //System.out.println("Inside ^");
+        Double result = 1.0;
+        if(rightData > 0) {
+          for(int i = 0; i < rightData; ++i) {
+            result *= leftData;
+          }
+        }
+        else {
+          rightData = Math.abs(rightData);
+          for(int i = 0; i < rightData; ++i) {
+            result *= leftData;
+          }
+          result = 1 / result;
+        }
+        return result;
     }
     return null;
   }
 
-  public Integer process(ASTNode<String> node) {
-    if(node.getLeft() == null) {
-      return Integer.valueOf(node.getData());
+  private Double processHelper(ASTNode<String> node) {
+    if(node.getLeft() == null && node.getRight() == null) {
+      //System.out.println("Inside if condition");
+      return Double.valueOf(node.getData());
     }
     else {  
-      Integer leftData = process(node.getLeft());
-      Integer rightData = process(node.getRight());
+      Double leftData = processHelper(node.getLeft());
+      Double rightData = processHelper(node.getRight());
       String operator = node.getData();
+      //System.out.println("Operator: " + operator);
       return calculate(operator, leftData, rightData);
     }
   }
 
+  public Double process(String infixInput) throws Exception {
+    make.buildTree(infixInput);
+    return processHelper(make.getRoot());
+  }
+
   public static void main(String[] args) throws Exception {
-    InfixToPostfix convert = new InfixToPostfix();
-    String postfix = convert.evaluate("1 + 2 * 3 - 4");
-    Tree make = new Tree();
-    make.buildTree(postfix);
-    ASTNode<String> root = make.getRoot();
     EvaluateTree calc = new EvaluateTree();
-    System.out.println("Output: " + calc.process(root));
+    //System.out.println("Output 1: " + calc.process("( 100 - 2 ) * 20"));
+    //System.out.println("Output 2: " + calc.process("100 -  2 * 20"));
+    System.out.println("Output 3: " + calc.process("2 ^ ( 10 - 20 )"));
+    System.out.println("Output 4: " + calc.process("1 / 1024"));
   }
 }
     
