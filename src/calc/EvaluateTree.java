@@ -20,21 +20,16 @@ public class EvaluateTree {
       case "^":
         //System.out.println("Inside ^");
         Double result = 1.0;
-        if(rightData > 0) {
-          for(int i = 0; i < rightData; ++i) {
-            result *= leftData;
-          }
+        Double absRight= Math.abs(rightData);
+        for(int i = 0; i < absRight; ++i) {
+          result *= leftData;
         }
-        else {
-          rightData = Math.abs(rightData);
-          for(int i = 0; i < rightData; ++i) {
-            result *= leftData;
-          }
+        if(rightData < 0) {
           result = 1 / result;
         }
         return result;
-    }
-    return null;
+      }
+      return null;
   }
 
   private Double processHelper(ASTNode<String> node) {
@@ -60,8 +55,8 @@ public class EvaluateTree {
     EvaluateTree calc = new EvaluateTree();
     //System.out.println("Output 1: " + calc.process("( 100 - 2 ) * 20"));
     //System.out.println("Output 2: " + calc.process("100 -  2 * 20"));
-    System.out.println("Output 3: " + calc.process("2 ^ ( 10 - 20 )"));
-    System.out.println("Output 4: " + calc.process("1 / 1024"));
+    System.out.println("Output 3: " + calc.process("2 ^ ( 1 - 2 ) * 0.5"));
+    //System.out.println("Output 4: " + calc.process("1 / 1024"));
   }
 }
     
