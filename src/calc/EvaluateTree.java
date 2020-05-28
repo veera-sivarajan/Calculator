@@ -53,10 +53,10 @@ public class EvaluateTree {
 
   public static void main(String[] args) throws Exception {
     EvaluateTree calc = new EvaluateTree();
-    //System.out.println("Output 1: " + calc.process("( 100 - 2 ) * 20"));
-    //System.out.println("Output 2: " + calc.process("100 -  2 * 20"));
-    System.out.println("Output 3: " + calc.process("2 ^ ( 1 - 2 ) * 0.5"));
-    //System.out.println("Output 4: " + calc.process("1 / 1024"));
+    System.out.println("Output 1: " + calc.process("(100-20)*20"));
+    System.out.println("Output 2: " + calc.process("100-2*20"));
+    System.out.println("Output 3: " + calc.process("2^(1-2)*0.5"));
+    System.out.println("Output 4: " + calc.process("1/1024"));
   }
 }
-    
+   

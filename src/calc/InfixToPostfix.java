@@ -52,44 +52,42 @@ public class InfixToPostfix {
   }
 
   public String evaluate(String input) throws Exception{ 
-      Scanner reader = new Scanner(input);
-      while(reader.hasNext()) {
-        String ch = reader.next();
-        if(isNumber(ch)) {
-          output += ch + " ";
-        }
+    String[] tokens = input.split("(?<=[^\\.a-zA-Z\\d])|(?=[^\\.a-zA-Z\\d])");
+    for(String ele : tokens) {
+      if(isNumber(ele)) {
+        output += ele + " ";
+      }
 
-        if(ch.equals("(")) {
-          //System.out.println("Pushing: " + ch);
-          operator.push(ch);
-        }
+      if(ele.equals("(")) {
+        //System.out.println("Pushing: " + ch);
+        operator.push(ele);
+      }
 
-        if(ch.equals(")")) {
-          while(operator.getSize() > 0 && !(operator.peek().equals("("))) {
-              output += operator.pop() + " ";
-            //System.out.println("Output: " + output);
-          }
-          //System.out.println("Popping: " + operator.pop()); //popping '('
-          operator.pop();
-        }
-
-        if(isOperator(ch)) {
-          while(operator.getSize() > 0 && precedence(ch) <= precedence(operator.peek()) && isLeftAssoc(ch)) {
+      if(ele.equals(")")) {
+        while(operator.getSize() > 0 && !(operator.peek().equals("("))) {
             output += operator.pop() + " ";
-          }
           //System.out.println("Output: " + output);
-          //System.out.println("Pushing: " + ch);
-          operator.push(ch);
         }
+        //System.out.println("Popping: " + operator.pop()); //popping '('
+        operator.pop();
+      }
+
+      if(isOperator(ele)) {
+        while(operator.getSize() > 0 && precedence(ele) <= precedence(operator.peek()) && isLeftAssoc(ele)) {
+          output += operator.pop() + " ";
+        }
+        //System.out.println("Output: " + output);
+        //System.out.println("Pushing: " + ch);
+        operator.push(ele);
+      }
         
         //System.out.println("Conversion: " + output);
-      }
-      while(operator.getSize() > 0) {
-        output += operator.pop() + " ";
-      }
+    }
+    while(operator.getSize() > 0) {
+      output += operator.pop() + " ";
+    }
       //System.out.println("Output: " + output);
-      reader.close();
-      return output;
+    return output;
   }
          
   /*SHIT CODE
