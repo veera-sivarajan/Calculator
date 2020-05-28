@@ -6,4 +6,3 @@
     2. Binary Tree
   - Caveats:
     1. Cannot handle unary operators
-    2. Does not work if operators and operands are not equally spaced
